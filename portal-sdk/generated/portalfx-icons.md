@@ -138,7 +138,7 @@ You can change the color of most icons provided by the framework (All the ones a
 To do so all you need to do is add {palette: MsPortalFx.Base.ImagePalette.*} inside the function
 
 ```ts
-import CustomSvgImages = require("./SvgDefinitions.js");
+import * as CustomSvgImages from "./SvgDefinitions.js";
 ...
 export class DeleteCommandViewModel implements MsPortalFx.ViewModels.CommandContract {
     public icon = ko.observable<MsPortalFx.Base.Image>();
