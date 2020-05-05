@@ -21,10 +21,13 @@
       - [Adding your own](#adding-your-own)
     - [Styling](#styling)
       - [View padding](#view-padding)
+    - [Debugging](#debugging)
+      - [Hot reloading](#hot-reloading)
   - [Known limitations](#known-limitations)
     - [Storage](#storage)
     - [Service Workers](#service-workers)
     - [Blade inputs / outputs](#blade-inputs--outputs)
+    - [Hot reloading limitations](#hot-reloading-limitations)
   - [Troubleshooting](#troubleshooting)
 
 <a name="react-views-what-it-is"></a>
@@ -694,6 +697,20 @@ public render() {
 
 View has default padding pre-applied for consistency with other portal experiences. You can apply the `reactview-nodefaultpadding` class to not use the standard padding.
 
+### Debugging
+Debugging React Views with [official React Developer Tools](https://github.com/facebook/react/tree/master/packages/react-devtools#react-devtools) is supported only when portal is loaded with `&clientOptimizations=false` or `&clientOptimizations=bundle` flags.
+Use the tools within your browsers:
+ - [Chrome extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+ - [Edge add-on](https://microsoftedge.microsoft.com/addons/detail/gpphkfbcpidddadnkolkpfckpihlkkil)
+ - [Firefox add-on](https://addons.mozilla.org/firefox/addon/react-devtools/)
+
+#### Hot reloading
+To enable hot reloading make sure that:
+1. you have ["compile on save" configured locally](https://github.com/Azure/portaldocs/blob/master/portal-sdk/generated/portalfx-extensions-faq-debugging.md#compile-on-save)
+2. you have `&feature.reactreload=true` and `&clientOptimizations=false` flags added onto the URL that you're side loading against
+
+Please, be aware of [Hot reloading limitations](#hot-reloading-limitations).
+
 ## Known limitations
 
 ### Storage
@@ -739,6 +756,12 @@ interface Props {
     closeView: (parameter: { id: string }) => void;
 }
 ```
+
+<a name="react-views-beyond-getting-started-hot-reloading-limitations"></a>
+### Hot reloading limitations
+ - Extension needs to be on newer production-supported Portal SDK version that is not yet released. _In the meantime __for local-development-only__ you can consider temporarily using intermediate private __non-supported__ Portal SDK of version 5.0.102.21301 or above (note 5.0.__102__.* version format for private non-supported versions, unlike PROD versions format being 5.0.__303__.*)_.
+
+- At this point hot reloading is not working for incremental controls updates.
 
 <a name="react-views-troubleshooting"></a>
 ## Troubleshooting
