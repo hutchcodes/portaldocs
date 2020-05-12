@@ -1,3 +1,7 @@
+> # IMPORTANT: The React Views are not ready for production use yet and are currently offered for internal previews by early adopters.
+> - [Join the 'Azure Portal React Views Early Adopters' DL](https://idwebelements/GroupManagement.aspx?Group=ibizareactblades&Operation=join) for updates
+> - Use [`ibiza-react` tag on Microsoft StackOverflow](https://stackoverflow.microsoft.com/questions/tagged/20863) for questions
+---
 <a name="react-views"></a>
 # React Views
 
@@ -33,7 +37,7 @@
 <a name="react-views-what-it-is"></a>
 ## What it is
 
-**React Views** are the new standard to build experiences in the Azure Portal.
+Once released **React Views** will become the new standard to build experiences in the Azure Portal.
 
 It combines the freedom of running React code in a visible iframe with the performance offered by the Portal framework; it makes Portal development as close to normal web development as possible without the cost and drawbacks of building and hosting a fully-custom solution.
 
