@@ -581,7 +581,7 @@ React version of the Essentials control. [See sample usage](https://msazure.visu
 * `"ReactView/CommandBar"`
 React version of traditional blades' command bar. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FHubsExtension%2FExtension%2FTypeScript%2FHubsExtension%2FReact%2FViews%2FResourcesWithTag.ReactView.tsx&version=GBdev&_a=contents).
 * `"ReactView/BladeLink"`
-React component allowing you to generate an `<a>` tag with an href pointing to a specified blade. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FHubsExtension%2FExtension%2FTypeScript%2FHubsExtension%2FReact%2FViews%2FReceivesReturnedData.ReactView.tsx&version=GBdev&_a=contents).
+React component allowing you to generate an `<a>` tag with an href pointing to a specified blade. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FReceivesReturnedData.ReactView.tsx&version=GBdev&_a=contents).
 * `"ReactView/StatusBar"`
 React version of traditional blades' status bar. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FHubsExtension%2FExtension%2FTypeScript%2FHubsExtension%2FReact%2FViews%2FRStatusBar.ReactView.tsx&version=GBdev&_a=contents).
 * `"ReactView/Dialog"`
