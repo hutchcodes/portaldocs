@@ -115,14 +115,6 @@ export class EditorInstructionsPartViewModel
             ViewModel="{ViewModel Name=EditorInstructionsPartViewModel, Module=./Editor/ViewModels/EditorViewModels}"
             InitialSize="FullWidthFitHeight"
             Template="{Html Source='Templates\\EditorInstructions.html'}" />
-<PartReference Name="EditorApiReferencePart"
-               InitialSize="FullWidthFitHeight"
-               PartType="ModuleReferencePart">
-  <PartReference.PropertyBindings>
-    <Binding Property="moduleName"
-             Source="{Constant MsPortalFx.ViewModels.Controls.Documents.Editor}" />
-  </PartReference.PropertyBindings>
-</PartReference>
 
 ```
 
@@ -244,12 +236,4 @@ export class CustomLanguageEditorPartViewModel {
                   ViewModel="{ViewModel Name=EditorInstructionsPartViewModel, Module=./Editor/ViewModels/EditorViewModels}"
                   InitialSize="FullWidthFitHeight"
                   Template="{Html Source='Templates\\EditorInstructions.html'}" />
-<PartReference Name="EditorApiReferencePart"
-                InitialSize="FullWidthFitHeight"
-                PartType="ModuleReferencePart">
-    <PartReference.PropertyBindings>
-        <Binding Property="moduleName"
-                Source="{Constant MsPortalFx.ViewModels.Controls.Documents.Editor}" />
-    </PartReference.PropertyBindings>
-</PartReference>
 ```

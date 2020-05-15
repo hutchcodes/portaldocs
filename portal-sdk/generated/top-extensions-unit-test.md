@@ -115,7 +115,7 @@ always-auth=true
     "@testing-library/react": "8.0.0",
     "requirejs": "2.3.6",
     "sinon": "7.2.3",
-    "typescript": "3.5.3"
+    "typescript": "3.9.1-rc"
   }
 }
 

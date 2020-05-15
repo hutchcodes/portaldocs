@@ -127,7 +127,7 @@ These enumerated values allow the extension to specify conditions like the follo
 
 * The EditScope's data is to be reverted or cleared as part of completing the 'save' operation, which is also known as the "create new record" UX scenario.
 
-For more information about each enum value, see the jsdoc comments around `MsPortalFx.Data.AcceptEditScopeChangesAction`, and  `MsPortalFxDocs.js`, in Visual Studio or any code editor.
+For more information about each enum value, see the jsdoc comments around `MsPortalFx.Data.AcceptEditScopeChangesAction`, in Visual Studio or any code editor.
 
 <a name="legacy-editscopes-the-editscope-data-model-the-trackedits-property"></a>
 #### The trackEdits property

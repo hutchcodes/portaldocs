@@ -41,7 +41,7 @@ import Grid = MsPortalFx.ViewModels.Controls.Lists.Grid;
 import QueryView = MsPortalFx.Data.QueryView;
 
 // Data type used in the grid sample
-export type Person = Person;
+export { Person } from "_generated/SamplesExtension/DataModels/Person";
 
 /**
  * Const function which produces a callback
