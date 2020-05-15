@@ -11,8 +11,7 @@ The spec picker has a three controls (dropdown, infobox, and selector) for getti
 
 ```typescript
 
-// The spec picker initial data observable.
-const initialDataObservable = ko.observable<SpecPicker.InitialData>({
+const initialSpecData: FxSpecPicker.InitialData = {
     selectedSpecId: "A0",
     entityId: "",
     recommendedSpecIds: ["small_basic", "large_standard"],
@@ -30,23 +29,16 @@ const initialDataObservable = ko.observable<SpecPicker.InitialData>({
             helpBalloonLinkUri: ClientResources.robotPricingTierLauncherDisabledSpecLinkUri,
         },
     ],
-});
-this.specDropDown = new SpecsDropDown(container, {
-    form: this,
-    accessor: this.createEditScopeAccessor((data: CreateEngineDataModel) => {
-        return data.spec;
-    }),
-    initialData: initialDataObservable,
-    // This extender should be the same extender view model used for the spec picker blade.
-    // You may need to extend your data context or share your data context between your
-    // create area and you spec picker area to use the extender with the current datacontext.
+};
+
+const specsDropDown = new FxSpecsDropDown(container, {
+    initialData: ko.observable(initialSpecData),
     specPickerExtender: new BillingSpecPickerV3Extender(container),
-    pricingBlade: {
-        detailBlade: "BillingSpecPickerV3",
-        detailBladeInputs: {},
-        hotspot: "EngineSpecDropdown1",
-    },
-});
+    // Make sure to use a blade reference factory, DynamicBladeReferences do not work with no pdl
+    pricingBladeReference: BladeReferences.forBlade("BillingSpecPickerV3"),
+    validations: ko.observableArray([new Validations.Required()]),
+    contextPane: true,
+} as FxSpecsDropDown.OptionsWithBladeReference);
 
 ```
 

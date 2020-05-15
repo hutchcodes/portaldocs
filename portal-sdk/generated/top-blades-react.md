@@ -708,6 +708,8 @@ Use the tools within your browsers:
  - [Edge add-on](https://microsoftedge.microsoft.com/addons/detail/gpphkfbcpidddadnkolkpfckpihlkkil)
  - [Firefox add-on](https://addons.mozilla.org/firefox/addon/react-devtools/)
 
+You can also use [official Redux Developer Tools](https://github.com/reduxjs/redux-devtools) to power up your Redux development workflow with enhanced state debugging capabilities like time-travel action replay and more (the same `&clientOptimizations=false` or `&clientOptimizations=bundle` flags are needed)!
+
 #### Hot reloading
 To enable hot reloading make sure that:
 1. you have ["compile on save" configured locally](https://github.com/Azure/portaldocs/blob/master/portal-sdk/generated/portalfx-extensions-faq-debugging.md#compile-on-save)
