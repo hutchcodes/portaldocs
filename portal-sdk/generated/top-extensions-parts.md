@@ -48,8 +48,8 @@ export class SimpleTemplatePart {
 
     public context: TemplatePart.Context<void, PartsArea.DataContext>;
 
-    public onInitialize() {
-        return Q();  // This sample loads no data.
+    public async onInitialize() {
+        // This sample loads no data.
     }
 }
 
@@ -89,7 +89,7 @@ export class SampleFramePart {
      */
     public viewModel: FramePart.ViewModelV2Contract;
 
-    public onInitialize() {
+    public async onInitialize() {
         const { container } = this.context;
         const viewModel = this.viewModel = FramePart.createViewModel(container, {
             src: MsPortalFx.Base.Resources.getContentUri("/Content/SamplesExtension/framepartpage.html"),
@@ -112,8 +112,6 @@ export class SampleFramePart {
             // Post initialization info from FrameControl to your iframe.
             viewModel.postMessage({ messageType: FramePage.MessageType.InitInfo, value: { authToken: token.header, resourceId: "testResourceId"}});
         });
-
-        return Q(); // This sample loads no data.
     }
 }
 

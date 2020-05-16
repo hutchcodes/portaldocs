@@ -82,8 +82,7 @@ public subtitle: string;
 public context: TemplateBlade.Context<void>;
 //docs#Context
 
-public onInitialize() {
-    return Q();  // This sample loads no data.
+public async onInitialize() {
 }
 }
 
@@ -133,7 +132,7 @@ export class TemplateBladesBlade {
 
     public viewModel: MenuBlade.ViewModel2;
 
-    public onInitialize() {
+    public async onInitialize() {
         const { container } = this.context;
 
         this.viewModel = MenuBlade.ViewModel2.create(container, {
@@ -218,8 +217,6 @@ export class TemplateBladesBlade {
                 },
             },
         });
-
-        return Q();  // This sample loads no data.
     }
 }
 

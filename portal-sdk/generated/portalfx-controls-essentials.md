@@ -196,83 +196,82 @@ public essentials: Essentials.ResourceLayoutContract;
  * Creating an essentials and using data-loading for the blade.
  * Note that it is returning a Promise of AJAX calling function.
  */
-public onInitialize(): Q.Promise<void> {
+public async onInitialize() {
     let clickCounter = 0;
 
-    return mockAPI(2)
-    .then(() => {
-        const { container, configuration } = this.context;
+    await mockAPI(2);
 
-        // Create an essentials
-        this._initializeControl();
+    const { container, configuration } = this.context;
 
-        // Read from the blade settings and set "expand" state value for the essentials
-        const configValues = configuration.getValues();
-        if (typeof configValues.settings.expanded === "boolean") {
-            this.essentials.expanded(configValues.settings.expanded);
-        }
+    // Create an essentials
+    this._initializeControl();
 
-        // Update the blade settings when "expanded" value is changed
-        this.essentials.expanded.subscribe(container, (expanded) => {
-            configuration.updateValues({
-                settings: { expanded },
-            });
+    // Read from the blade settings and set "expand" state value for the essentials
+    const configValues = configuration.getValues();
+    if (typeof configValues.settings.expanded === "boolean") {
+        this.essentials.expanded(configValues.settings.expanded);
+    }
+
+    // Update the blade settings when "expanded" value is changed
+    this.essentials.expanded.subscribe(container, (expanded) => {
+        configuration.updateValues({
+            settings: { expanded },
         });
-
-        // Once the Essentials control is instantiated, this Blade contains enough UI that it can remove the blocking loading indicator
-        container.revealContent();
-    }).then(() => {
-        // Sample AJAX Action
-        return sampleAJAXFunction();
-    }).then((results: any) => {
-        //essentials#addDynamicProps
-        // Generate array of Essentials.Item | Essentials.MultiLineItem from the results
-        const items: ((Essentials.Item | Essentials.MultiLineItem)[]) = results.map((data: any): Essentials.Item | Essentials.MultiLineItem => {
-            switch (data.type) {
-                case "connectionString":
-                    const connectionString = ko.observable(ClientResources.essentialsConnectionStringValue);
-                    return {
-                        label: data.label,
-                        value: connectionString,
-                        onClick: () => {
-                            connectionString(data.value);
-                        },
-                    };
-                case "text":
-                    return {
-                        label: data.label,
-                        value: data.value,
-                        icon: {
-                            image: MsPortalFx.Base.Images.SmileyHappy(),
-                            position: Essentials.IconPosition.Right,
-                        },
-                    };
-                case "url":
-                    return {
-                        label: data.label,
-                        value: data.value,
-                        onClick: new ClickableLink(ko.observable(data.url)),
-                    };
-                case "changeStatus":
-                    return {
-                        label: data.label,
-                        value: data.value,
-                        onClick: () => {
-                            this.essentials.modifyStatus(`${++clickCounter} ${ClientResources.essentialsTimesClicked}!`);
-                        },
-                    };
-            }
-            //essentials#addDynamicProps
-        });
-
-        // Dynamically adding generated items to the essentials
-        this.essentials.addDynamicProperties(
-            // Add first two items to the left
-            items.slice(0, 2),
-            // Add next two items to the right
-            items.slice(2, 4)
-        );
     });
+
+    // Once the Essentials control is instantiated, this Blade contains enough UI that it can remove the blocking loading indicator
+    container.revealContent();
+
+    // Sample AJAX Action
+    const results = await sampleAJAXFunction();
+
+    //essentials#addDynamicProps
+    // Generate array of Essentials.Item | Essentials.MultiLineItem from the results
+    const items: ((Essentials.Item | Essentials.MultiLineItem)[]) = results.map((data: any): Essentials.Item | Essentials.MultiLineItem => {
+        switch (data.type) {
+            case "connectionString":
+                const connectionString = ko.observable(ClientResources.essentialsConnectionStringValue);
+                return {
+                    label: data.label,
+                    value: connectionString,
+                    onClick: () => {
+                        connectionString(data.value);
+                    },
+                };
+            case "text":
+                return {
+                    label: data.label,
+                    value: data.value,
+                    icon: {
+                        image: MsPortalFx.Base.Images.SmileyHappy(),
+                        position: Essentials.IconPosition.Right,
+                    },
+                };
+            case "url":
+                return {
+                    label: data.label,
+                    value: data.value,
+                    onClick: new ClickableLink(ko.observable(data.url)),
+                };
+            case "changeStatus":
+                return {
+                    label: data.label,
+                    value: data.value,
+                    onClick: () => {
+                        this.essentials.modifyStatus(`${++clickCounter} ${ClientResources.essentialsTimesClicked}!`);
+                    },
+                };
+        }
+        //essentials#addDynamicProps
+    });
+
+    // Dynamically adding generated items to the essentials
+    this.essentials.addDynamicProperties(
+        // Add first two items to the left
+        items.slice(0, 2),
+        // Add next two items to the right
+        items.slice(2, 4)
+    );
 }
 
 ```
@@ -408,7 +407,7 @@ public essentials: Essentials.ResourceLayoutContract;
 /**
  * Creating an essentials and not using data-loading for the blade.
  */
-public onInitialize(): Q.Promise<void> {
+public async onInitialize() {
     const { container, configuration } = this.context;
 
     // Create an essentials
@@ -429,9 +428,6 @@ public onInitialize(): Q.Promise<void> {
 
     // Once the Essentials control is instantiated, this Blade contains enough UI that it can remove the blocking loading indicator
     container.revealContent();
-
-    // Does not use data-loading for the blade.
-    return Q();
 }
 
 ```
@@ -561,7 +557,7 @@ private _customStatus: KnockoutObservable<string> = ko.observable(null);
 /**
  * Creating an essentials and not using data-loading for the blade.
  */
-public onInitialize(): Q.Promise<void> {
+public async onInitialize() {
     const { container, configuration } = this.context;
 
     // Create an essentials
@@ -582,9 +578,6 @@ public onInitialize(): Q.Promise<void> {
 
     // Once the Essentials control is instantiated, this Blade contains enough UI that it can remove the blocking loading indicator
     container.revealContent();
-
-    // Does not use data-loading for the blade.
-    return Q();
 }
 
 ```

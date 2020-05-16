@@ -63,7 +63,7 @@ export class SampleFrameBlade {
      */
     public viewModel: FrameBlade.ViewModelV2Contract;
 
-    public onInitialize() {
+    public async onInitialize() {
         const { container } = this.context;
         const viewModel = this.viewModel = FrameBlade.createViewModel(container, {
             src: MsPortalFx.Base.Resources.getContentUri("/Content/SamplesExtension/framebladepage.html"),
@@ -93,8 +93,6 @@ export class SampleFrameBlade {
         const commandBar = new Toolbar(container);
         commandBar.setItems([this._openLinkButton(), this._openDialogButton()]);
         container.commandBar = commandBar;
-
-        return Q(); // This sample loads no data.
     }
 
     private _openLinkButton(): Toolbars.OpenLinkButton {
