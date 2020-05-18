@@ -228,6 +228,7 @@ If authoring custom rules for your own team use apCliConfig.json to supply a col
 Argument | Description
 --- | ---
 --fix | Optional. Automatically fix problems by running the automated fix implementation that ship with each lint rule.
+--format | Optional. formats results in the desired eslint format https://eslint.org/docs/user-guide/formatters.
 --resolve-plugins-relative-to | Optional. A folder where plugins should be resolved from.
 --help | Show help for the command.
 
@@ -819,8 +820,8 @@ The ap CLI is built by the Azure portal team for the extension developer communi
 
 - What are the IDE specific installs required for Visual Studio?
     Insall Visual Studio 2019 Professional or Enterpise from [https://visualstudio.microsoft.com/downloads/](https://visualstudio.microsoft.com/downloads/).
-      
-      * Select the following workloads from the *workloads* tab: 
+
+      * Select the following workloads from the *workloads* tab:
         * Node.js development
         * ASP.NET and web development
 
