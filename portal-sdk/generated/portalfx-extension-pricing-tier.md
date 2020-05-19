@@ -91,7 +91,7 @@ export class RobotSpecPickerV3Extender implements HubsExtension.Azure.SpecPicker
    /**
     * See SpecPickerExtender interface.
     */
-   public selectionMode: Lists.ListView.SelectionMode;
+   public selectionMode: SpecPicker.SelectionMode;
 
    /**
     * See SpecPickerExtender interface.
@@ -108,7 +108,7 @@ export class RobotSpecPickerV3Extender implements HubsExtension.Azure.SpecPicker
     * @param container The view model for the part container.
     * @param dataContext The data context.
     */
-   constructor(container: MsPortalFx.ViewModels.ContainerContract, dataContext: HubsArea.DataContext, selectionMode?: Lists.ListView.SelectionMode) {
+   constructor(container: MsPortalFx.ViewModels.ContainerContract, dataContext: HubsArea.DataContext, selectionMode?: SpecPicker.SelectionMode) {
        
 ```
 
@@ -116,7 +116,7 @@ Inside of the constructor of the extender view model you'll have to setup the in
 ```typescript
 
 // The spec picker can return one or many specs. Specify if you want the user to be able to select multiple specs.
-this.selectionMode = selectionMode || Lists.ListView.SelectionMode.Single;
+this.selectionMode = selectionMode || SpecPicker.SelectionMode.Single;
 
 // Perform the initial fetch to load data into the view from your own controllers
 //config#specPickerData

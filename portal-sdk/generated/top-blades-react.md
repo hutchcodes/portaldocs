@@ -23,6 +23,7 @@
       - [Open source](#open-source)
       - [Portal-specific](#portal-specific)
       - [Adding your own](#adding-your-own)
+        - [Samples](#samples)
     - [Styling](#styling)
       - [View padding](#view-padding)
     - [Debugging](#debugging)
@@ -646,6 +647,12 @@ define(['exports'], function (exports) {
     exports.action = function () {};
 });
 ```
+
+<a name="react-views-beyond-getting-started-dependencies-adding-your-own-samples"></a>
+##### Samples
+| Library | React View | Code changes |
+|---------|------------|--------------|
+| Luxon.js | [Link](https://df.onecloud.azure-test.net/#blade/SamplesExtension/ReactViewsBlade/reactLuxon) | [Link](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx/pullrequest/2855250) |
 
 <a name="react-views-beyond-getting-started-styling"></a>
 ### Styling
