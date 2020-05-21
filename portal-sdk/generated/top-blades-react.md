@@ -6,7 +6,7 @@
     - [Runtime](#runtime)
     - [Build-time](#build-time)
     - [Performance](#performance)
-      - [Why it's performant](#why-its-performant)
+      - [Why it's performant](#why-it's-performant)
       - [How performance is measured](#how-performance-is-measured)
   - [Getting started](#getting-started)
     - [Step 1: tsconfig.json](#step-1-tsconfigjson)
@@ -18,6 +18,9 @@
     - [Dependencies](#dependencies)
       - [Open source](#open-source)
       - [Portal-specific](#portal-specific)
+      - [Adding your own](#adding-your-own)
+    - [Styling](#styling)
+      - [View padding](#view-padding)
   - [Known limitations](#known-limitations)
     - [Storage](#storage)
     - [Service Workers](#service-workers)
@@ -37,7 +40,7 @@ It combines the freedom of running React code in a visible iframe with the perfo
 <a name="react-views-how-it-works-runtime"></a>
 ### Runtime
 
-During Portal startup, an iframe is injected with a Portal-defined home page containing React open source libraries and all the information needed to consume Office Fabric components and framework-provided utilities.
+During Portal startup, an iframe is injected with a Portal-defined home page containing React open source libraries and all the information needed to consume [Fluent UI (formerly known as Office UI Fabric) components](https://developer.microsoft.com/fluentui#/controls/web) and framework-provided utilities.
 
 Upon navigating to a React View, the corresponding extension's `requireConfig` (JSON blob containing script locations) is fetched and injected in the prewarmed iframe. The requested view's code is then downloaded and executed in the iframe.
 
@@ -50,7 +53,7 @@ The React Views build works by setting up a second TypeScript build in your proj
 
 Once you have created the new tsconfig.json according to documentation and have a copy of the latest SDK's ReactView.d.ts, views are written by creating `*.ReactView.tsx` files containing a ReactView decorator on a React component.
 
-You can import framework controls, OfficeFabric controls or your own AMD modules from that view file; the Portal will bundle all AMD JavaScript files it finds and build the requireConfig that will be fetched and injected in your iframe at runtime.
+You can import framework controls, Fluent UI controls or your own AMD modules from that view file; the Portal will bundle all AMD JavaScript files it finds and build the requireConfig that will be fetched and injected in your iframe at runtime.
 
 <a name="react-views-how-it-works-performance"></a>
 ### Performance
@@ -69,7 +72,7 @@ Two main reasons make React Views more performant than generic iframe solutions;
 
 Performance measurements are integrated with React's render logic; you'll provide a function to be evaluated after every render of your view's main component, and that function returning true will determine when your experience is considered ready.
 
-In addition to that measurement showing up as a native marker in a performance profile, please note that that React and OfficeFabric component performance markers have been preserved and will also show up in profiles. Moreover, React Views are fully compatible with [official React dev tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi). For more information about debugging and optimizing the performance of your experience, please refer to the [official Portal performance documentation](https://github.com/Azure/portaldocs/blob/master/portal-sdk/generated/top-extensions-performance.md).
+In addition to that measurement showing up as a native marker in a performance profile, please note that that React and Fluent UI component performance markers have been preserved and will also show up in profiles. Moreover, React Views are fully compatible with [official React dev tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi). For more information about debugging and optimizing the performance of your experience, please refer to the [official Portal performance documentation](https://github.com/Azure/portaldocs/blob/master/portal-sdk/generated/top-extensions-performance.md).
 
 <a name="react-views-getting-started"></a>
 ## Getting started
@@ -145,7 +148,7 @@ Notes about the above content:
 * Targets ES5 for Internet Explorer 11 compatibility
 * Includes:
     - `**/*.*` to compile everything under this directory
-    - `ReactView.d.ts`, the single .d.ts file containing all typings for framework-provided libraries (React, OfficeFabric, Portal-specific controls, etc.)
+    - `ReactView.d.ts`, the single .d.ts file containing all typings for framework-provided libraries (React, Fluent UI, Portal-specific controls, etc.)
 
 **You then need to change two properties:**
 * `outDir`: Make this the same outDir as your full extension build, which will usually mean copying what's in your outer build's `tsconfig.json` ([SamplesExtension example](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2Ftsconfig.json)) plus traversing up a few more directories ([SamplesExtension React example](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2Ftsconfig.json))
@@ -240,9 +243,9 @@ This imports resources built from your `*.resx` files; for this sample we simply
 ```typescript
 import { Fabric } from "OfficeFabric/Fabric";
 ```
-This imports the root Fabric component from the OfficeFabric library. React Views should always use a `<Fabric>` node at the root of their template for consistency reasons since it will provide theming and boilerplate CSS for your experience.
+This imports the root Fabric component from the Fluent UI library. React Views should always use a `<Fabric>` node at the root of their template for consistency reasons since it will provide theming and boilerplate CSS for your experience.
 
-More controls can be found under the `"OfficeFabric/"` namespace; React Views support all controls found on the official [OfficeFabric documentation](https://developer.microsoft.com/en-us/fabric#/controls/web) and these can be discovered simply by autocompletion (all typings are defined in `ReactView.d.ts`) or in the aforementioned docs.
+More controls can be found under the `"OfficeFabric/"` namespace; React Views support all controls found on the official [Fluent UI documentation](https://developer.microsoft.com/fluentui#/controls/web) and these can be discovered simply by autocompletion (all typings are defined in `ReactView.d.ts`) or in the aforementioned docs.
 
 ```typescript
 interface ComponentState {
@@ -397,7 +400,7 @@ We import the `createStore` function from the `"redux"` module to create the red
 import { Text } from "OfficeFabric/Text";
 import { TextField } from "OfficeFabric/TextField";
 ```
-Those two import statements are importing two OfficeFabric controls, the Text control (simply displays text) and the TextField control (an editable textbox).
+Those two import statements are importing two Fluent UI controls, the Text control (simply displays text) and the TextField control (an editable textbox).
 
 ```typescript
 import { Decorator, ReactReduxConnect } from "ReactView/ReactView";
@@ -419,7 +422,7 @@ class TextLabel extends React.Component<{ text?: string }, {}> {
     }
 }
 ```
-Here we define a label component, which is simply going to be an OfficeFabric `Text` control with our store's text property for content.
+Here we define a label component, which is simply going to be an Fluent UI `Text` control with our store's text property for content.
 
 The `ReactReduxConnect` decorator uses our Store interface as a generic argument, and the fist parameter, named `mapStateToProps`, is a function taking in the redux state and outputting and object with the subset of properties that this component cares about; here, that's the `"text"` property. Note that the component's properties interface is the same as what was returned by the function passed in as the first argument of the decorator; in reality the decorator has multiple optinal arguments and they all participate in shaping properties and states for the decorated component, please refer to the full typings and official [react-redux connect documentation](https://react-redux.js.org/api/connect) for more details.
 
@@ -492,14 +495,9 @@ We understand that most developers coming here will have existing extensions, wi
 
 To ease migration of such complex experiences backed by code that relies heavily on `MsPortalFx` framework functionality, React Views provide a way to run code in your extension's web worker, along will all non-React-View code, that can communicate with your React View. Such code is called React Models. A React Model is an AMD module that will be dynamically required in your web worker's context at the same time as your React View code is injected in the iframe. The way to communicate between the two is via a redux store called the `asyncStore`. An async store is a redux store created in your iframe for which changed are proxied to a copy living in your React model's code and vice versa.
 
-Refer to the following sample for the following explanations;
+Refer to the (Migrated.ReactView)[https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FMigrated.ReactView.tsx&version=GBdev] and (Migrated.ReactModel)[https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FModels%2FMigrated.ReactModel.ts&version=GBdev] samples for the following explanations.
 
-```typescript
-    /* Migrated sample code here */
-    /* link to migrated sample code here, because we'll refer to file hierarchy */
-```
-
-You'll notice how there is no functional difference between React Views component code weither it uses a model or not. The only difference is that for correctness reasons, store types are split out in a `Common.d.ts` interface file which is built both by the React TypeScript build (from the tsconfig.json file created in a previous section) and the outer Extension build; that's because the React Model file will be built by the outer build.
+You'll notice how there is no functional difference between React Views component code whether it uses a model or not. The only difference is that for correctness reasons, store types are split out in a `Common.d.ts` interface file which is built both by the React TypeScript build (from the tsconfig.json file created in a previous section) and the outer Extension build; that's because the React Model file will be built by the outer build.
 
 Here are more details on the model's implementation.
 
@@ -560,9 +558,9 @@ Stock redux library. [See official documentation](https://redux.js.org/).
 * `"react-redux"`
 Stock react-redux library. [See official documentation](https://react-redux.js.org/).
 * `"OfficeFabric/"`
-Office fabric controls are found under this namespace.  [See official documentation](https://developer.microsoft.com/en-us/fabric#/controls/web).
+Fluent UI (formerly known as Office UI Fabric) controls are found under this namespace.  [See official documentation](https://developer.microsoft.com/fluentui#/controls/web).
 * `"lodash"`
-Stock lodash library. [See official documentation](https://lodash.com/docs/). **Please note this library is fairly heavy**, so for performance reasons it should not be used if it's only imported for one or two functions; please note that tree shaking is impossible to apply here for your bundles since for performance reasons, a download of lodash should be a chache hit, and said download can only be a cache hit if everyone downloads the exact same script when they require lodash.
+Stock lodash library. [See official documentation](https://lodash.com/docs/). **Please note this library is fairly heavy**, so for performance reasons it should not be used if it's only imported for one or two functions; please note that tree shaking is impossible to apply here for your bundles since for performance reasons, a download of lodash should be a cache hit, and said download can only be a cache hit if everyone downloads the exact same script when they require lodash.
 
 <a name="react-views-beyond-getting-started-dependencies-portal-specific"></a>
 #### Portal-specific
@@ -573,48 +571,139 @@ Az library, meant to provide all APIs needed to communicate with the Portal's Sh
 Root module for React Views containing all decorators used to register blades or connect components. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FMigrated.ReactView.tsx&version=GBdev&_a=contents).
 * `"ReactView/Essentials"`
 React version of the Essentials control. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FEssentials.ReactView.tsx&version=GBdev&_a=contents).
-* `"ReactView/BladeCommandBar"`
+* `"ReactView/CommandBar"`
 React version of traditional blades' command bar. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FHubsExtension%2FExtension%2FTypeScript%2FHubsExtension%2FReact%2FViews%2FResourcesWithTag.ReactView.tsx&version=GBdev&_a=contents).
 * `"ReactView/BladeLink"`
 React component allowing you to generate an `<a>` tag with an href pointing to a specified blade. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FHubsExtension%2FExtension%2FTypeScript%2FHubsExtension%2FReact%2FViews%2FReceivesReturnedData.ReactView.tsx&version=GBdev&_a=contents).
-* `"ReactView/BladeStatusBar"`
+* `"ReactView/StatusBar"`
 React version of traditional blades' status bar. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FHubsExtension%2FExtension%2FTypeScript%2FHubsExtension%2FReact%2FViews%2FRStatusBar.ReactView.tsx&version=GBdev&_a=contents).
 * `"ReactView/Dialog"`
 React version of blade dialogs. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FAzSamples.ReactView.tsx&version=GBdev&_a=contents).
 * `"ReactView/FrameworkIcon"`
 React component allowing you to display Portal framework icons. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FHubsExtension%2FExtension%2FTypeScript%2FHubsExtension%2FReact%2FViews%2FResourcesWithTag.ReactView.tsx&version=GBdev&_a=contents).
-* `"ReactView/LocationsDropdown"`
-React version of the LocationsDropDown control. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FMigrated.ReactView.tsx&version=GBdev&_a=contents).
+* `"ReactView/LocationDropdown"`
+React version of the LocationDropDown control. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FMigrated.ReactView.tsx&version=GBdev&_a=contents).
 * `"ReactView/ResourceGroupDropdown"`
 React version of the ResourceGroupDropdown control. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FMigrated.ReactView.tsx&version=GBdev&_a=contents).
 * `"ReactView/SubscriptionDropdown"`
 React version of the SubscriptionDropdown control (single-select, pick an Azure subscription). [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FHubsExtension%2FExtension%2FTypeScript%2FHubsExtension%2FReact%2FViews%2FResourcesWithTag.ReactView.tsx&version=GBdev&_a=contents).
-* `"ReactView/SubscriptionsDropdown"`
-React version of the SubscriptionsDropdown control (multi-select, impacts which subscriptions are used throughout the Portal). [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FMigrated.ReactView.tsx&version=GBdev&_a=contents).
+* `"ReactView/SubscriptionFilter"`
+React version of the ResourceFilter control's Subscriptions component (multi-select, impacts which subscriptions are used throughout the Portal). [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FMigrated.ReactView.tsx&version=GBdev&_a=contents).
 
 * `"ReactView/Resources"`
 Provides two methods, `getContentUri` and `getAbsoluteUri` which mirror `MsPortalFx.getContentUri` and `MsPortalFx.getAbsoluteUri` respectively.
 * `"ReactView/Ajax"`
-Network helper module. **Please note that for standard network requests, you can use the browser's [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) API**; this module provides the "getEndpoints", "batch" and "batchMultiple" methods used to talk to ARM (Azure Resource Manager), mirroring "Fx/Batch" functionality.
+Network helper module. **Please note that for standard network requests, you can use the browser's [fetch](https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch) API**; this module provides the "getEndpoints", "batch" and "batchMultiple" methods used to talk to ARM (Azure Resource Manager), mirroring "Fx/Batch" functionality.
 * `"ReactView/Styling"`
 Module used for CSS-in-JS component styling. Provides one method, `getClassNames`, which takes a list of classes with associated CSS properties and returns an object with generated class names to be used in the `className` attributes of your React components. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FStyling.ReactView.tsx&version=GBdev&_a=contents).
 * `"ReactView/Provisioning"`
 Provisioning is now done through this module. The API has been built to mirror functionality that used to be provided by `this.context.provisioning` in template blades after using the `TemplateBlade.DoesProvisioning` decorator. Note that the `ReactView.DoesProvisioning` decorator still has to be present on a blade component in addition to the use of the new module. [See sample usage](https://msazure.visualstudio.com/One/_git/AzureUX-PortalFx?path=%2Fsrc%2FSDK%2FExtensions%2FSamplesExtension%2FExtension%2FClient%2FReact%2FViews%2FCreateCustomRobot.ReactView.tsx&version=GBdev&_a=contents).
 
-<a name="react-views-known-limitations"></a>
+<a name="react-views-beyond-getting-started-dependencies-adding-your-own"></a>
+#### Adding your own
+
+React Views support any JavaScript with the requirement that it is AMD; this is a strict requirement for performance reasons.
+
+If a library ships an AMD version, then just having the files in repo (then copied to outdir) means the bundler will pick them up and you can import them via path-based module ID.
+
+Please note that if the library expects ambient Node.js-style imports to work, they might not at runtime; the Portal uses path-based AMD module resolution, not Node.js module resolution.
+Manually fixing this yourself may not be a trivial task since JavaScript will throw at runtime, not build time.
+
+If the library does not ship an AMD version, then you will have to modify it yourself to enable this, either via a custom build step or modifying the files yourself in your repository.
+There isn't a universal trick to turn arbitrary JavaScript into an asynchronous module, but in the end you need an importable module - one that's defined with the AMD syntax:
+```javascript
+define([ /* dependencies */ ], function() { /* definition */ }
+```
+
+For all those reasons, we encourage developers to use pre-bundled versions of OSS libraries they want to rely on; such libraries can commonly be found on free open source software repositories like https://cdnjs.com and will require no (if already AMD) or little (if already a module) modification to be consumed as AMD modules by the Portal.
+The most common modification will be turning a UMD module into an AMD one; this can be done by replacing
+```javascript
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['exports'], factory);
+    } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
+        // CommonJS
+        factory(exports);
+    } else {
+        // Browser globals
+        factory((root.commonJsStrict = {}));
+    }
+}(this, function (exports) {
+    exports.action = function () {};
+}));
+```
+with
+```javascript
+define(['exports'], function (exports) {
+    exports.action = function () {};
+});
+```
+
+<a name="react-views-beyond-getting-started-styling"></a>
+### Styling
+
+You can use your own CSS classes to customize View to your needs. The sample is located at `<dir>\Client\React\Views\Styling.ReactView.tsx`, with essential steps also included below:
+
+1. Import the `getClassNames` facility:
+
+ ```typescript
+
+import { getClassNames } from "ReactView/Styling";
+
+```
+
+2. Define your classes with custom rules:
+
+ ```typescript
+
+const classNames = getClassNames({
+one: {
+    color: "red",
+    border: "1px solid red",
+},
+two: {
+    color: "purple",
+    border: "1px solid purple",
+},
+three: {
+    color: "green",
+    border: "1px solid green",
+},
+});
+
+```
+
+3. Use the defined classes in your `render` method:
+
+ ```typescript
+
+public render() {
+    return <>
+        <Fabric>
+            <Text className={classNames.one}>{ClientResources.reactStyled}</Text>
+            <Text className={classNames.two}>{ClientResources.hello}</Text>
+            <Text className={classNames.three}>{this.state.name}</Text>
+        </Fabric>
+    </>;
+}
+
+```
+
+#### View padding
+
+View has default padding pre-applied for consistency with other portal experiences. You can apply the `reactview-nodefaultpadding` class to not use the standard padding.
+
 ## Known limitations
 
-<a name="react-views-known-limitations-storage"></a>
 ### Storage
 
 Since the framework controls the home page of React Views, every view shares the same origin, so some limitations have to apply to code they can run for security reasons. One of those limitations is browser storage; since every React View shares the same storage, malicious code could pollute storage for everyone, so access to built-in `localStorage` and `sessionStorage` has been blocked and replaced with identical APIs manipulating in-memory storage. This means code relying on such storage will work and won't throw, but any logic relying on data expected to persist past the view's lifetime will not behave as expected. As for `IndexedDB`, access to it has also been blocked and no in-memory replacement is currently available for it.
 
-<a name="react-views-known-limitations-service-workers"></a>
 ### Service Workers
 
 Similarly to storage limitations, since the framework controls the home page of React Views, every view shares the same origin so Service Workers can't work securely in React Views and the API is blocked.
 
-<a name="react-views-known-limitations-blade-inputs-outputs"></a>
 ### Blade inputs / outputs
 
 React Views handle blade inputs via prop typings; simply add a `parameters` member to your blade component's properties interface and blade-opening APIs will now have the appropriate parameter typings. A current limitation of this is that your `parameters` typings must be fully declared inline, meaning you can't just set that to be an interface or an imported type;
