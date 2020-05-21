@@ -98,7 +98,7 @@ See `ap start` demo in the [Video: A single command for restoring dependencies, 
 1. run following commands
 
 ```
-cd ./FirstExtension/src/default/extension.unittest
+cd ./FirstExtension/src/default/extension.unittests
 ap run test
 ```
 
